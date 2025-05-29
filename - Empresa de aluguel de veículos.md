@@ -1,0 +1,42 @@
+- Empresa de aluguel de veículos
+- Foco em instituições de ensino
+- Atualmente falta controle de alocação
+- Atualmente é realizado mediante preenchimento de formulário, aprovação manual
+- Utilização de cargos para controlar permissões
+- Cadastro básico de usuários da frota: CPF do responsáveç, instituição, endereço, veículo
+- A pessoa deve estar previamente relacionada com a instituição para solicitar uma alocação
+- Valor da alocação configurável
+- O locador deve assinar um termo de compromisso
+- Um veículo pode ser reservado antes de ser locado de fato
+- Empresa de médio porte
+- Não é necessário controlar a manutenção de veículos
+- Adição de pessoas a instituições é feita via contato da instituição
+- O aluguel deve ter uma descrição do motivo do aluguel (Possíveis locais, quilometragem estimada, horário de retirada, odômetro inicial)
+- Talvez checklist do estado do carro a cada locação (odômetro final, horário de chegada) (mencionou algo de improbidade administrativa se o segurança verificar o veículo, então o gestor de patrimônio deve fazer o checklist mensalmente talvez)
+- Relatório de devolução do veículo tem um campo de observações onde o cliente informa avarias ocasionadas no veículo
+- Solicitação via atendimento em balcão
+- Empréstimo possível para funcionários internos também
+- Histórico de uso por instituição, por veículo e por locador (cliente), com filtros de data
+- Deve ter um controle de inaptos (pessoas ou instituições com direitos revogados)
+- Deve emitir NFS-e
+- A empresa presta cursos
+- Esquema de resposta automatizada (whatsapp e/ou e-mail) de se foi aprovado ou não e o modelo do veículo alocado
+- A solicitação vem através de uma ficha
+- Pagamento em dinheiro e pix
+- Segurança recebe o valor e anota na planilha
+- Usuário leigo
+- Status dos carros: (Disponível, alugado, em manutenção)
+- Cliente não escolhe o carro
+- Categorias básicas de veículo (4 portas, porta malas extendido, Veículo novo) para determinar o propósito da viagem
+- O solicitante não é necessariamente o motorista, cadastrar os dois como se fossem pessoas diferentes
+- A solicitação deve ter a informação do nome, telefone e CPF dos passageiros
+- Não cobram multa em caso de atrasos, mas torna o solicitante inadimplente
+- Controle de gastos por veículo
+- O locador deve preencher o diário de bordo em um aplicativo
+- Aplicativo web é o ideal devido a situação acima
+
+- Fluxo de trabalho:
+- Cliente previamente cadastrado solicita uma locação no balcão
+- Um gestor deve analisar a solitação e aprovar ou não
+- Ou ele ou o gestor de patrimônio aprova o aluguel e atualiza na planilha da segurança qual veículo vai ser utilizado
+- O segurança olha na planilha e entrega a chave

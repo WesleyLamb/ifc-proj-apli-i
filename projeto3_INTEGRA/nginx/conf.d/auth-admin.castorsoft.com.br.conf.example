@@ -1,0 +1,19 @@
+server {
+    listen 443 ssl;
+
+    ssl_certificate /etc/ssl/certs/fullchain.pem;
+    ssl_certificate_key /etc/ssl/certs/privkey.pem;
+    ssl_protocols   TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers     HIGH:!aNULL:!MD5;
+
+    index index.php index.html;
+    client_max_body_size 20M;
+    error_log  /var/log/nginx/error.log debug;
+    access_log /var/log/nginx/access.log;
+    root /var/www/app/public;
+    server_name admin.castorsoft.com.br;
+
+    location / {
+        proxy_pass https://auth:8443;
+    }
+}
