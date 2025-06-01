@@ -7,7 +7,6 @@ WORKDIR /var/www/app
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
 RUN apt-get update && apt-get --fix-broken install -y \
-    git \
     curl \
     libpng-dev \
     libonig-dev \

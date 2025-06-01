@@ -14,29 +14,3 @@ use Laravel\Socialite\Facades\Socialite;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/auth/kc/redirect', function () {
-
-    return Socialite::driver('keycloak')->redirect();
-
-});
-
-
-
-Route::get('/auth/kc/callback', function () {
-
-    $user = Socialite::driver('keycloak')->user();
-    dd($user);
-
-
-    // $user->token
-
-});
-
-Route::get('/mac', function (Request $request) {
-    dd($request);
-});
