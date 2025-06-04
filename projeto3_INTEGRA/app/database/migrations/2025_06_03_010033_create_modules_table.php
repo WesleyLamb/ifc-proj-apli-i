@@ -14,15 +14,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(DB::raw('gen_random_uuid()'));
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('application_id');
             $table->timestamps();
+            $table->softDeletes();
+            $table->string('name');
+            $table->text('description');
+            $table->decimal('value');
+            $table->string('logo_file');
+
+            $table->foreign('application_id')->references('id')->on('applications');
         });
     }
 
@@ -33,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('modules');
     }
 };

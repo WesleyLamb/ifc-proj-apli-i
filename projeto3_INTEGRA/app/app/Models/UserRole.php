@@ -2,50 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class UserRole extends Model
 {
-    use HasApiTokens, Notifiable;
-
     /******************************************
     *                                         *
     *               PROPERTIES                *
     *                                         *
     ******************************************/
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public $table = 'user_roles';
+    public $timestamps = false;
 
     /******************************************
     *                                         *
@@ -59,16 +27,6 @@ class User extends Authenticatable
     *                                         *
     ******************************************/
 
-    public function applications()
-    {
-        return $this->hasMany(Application::class, 'user_id', 'id');
-    }
-
-    public function roles()
-    {
-        return $this->hasMany(UserRole::class, 'user_id', 'id');
-    }
-
     /******************************************
     *                                         *
     *                  SCOPES                 *
@@ -80,9 +38,4 @@ class User extends Authenticatable
     *                 METHODS                 *
     *                                         *
     ******************************************/
-
-    public function hasRole(string $role)
-    {
-        return $this->roles()->firstWhere('role', $role) ? true : false;
-    }
 }
