@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\IsPNG;
+use App\Rules\IsBase64Image;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateModuleRequest extends FormRequest
@@ -29,7 +29,7 @@ class UpdateModuleRequest extends FormRequest
             'description' => ['required', 'string'],
             'value' => ['required', 'numeric'],
             'scopes' => ['required', 'array', 'min:1'],
-            'logo.data' => ['sometimes', 'required_without:logo.data', new IsPNG(), 'max:1048576'],
+            'logo.data' => ['sometimes', 'required_without:logo.data', new IsBase64Image(), 'max:1048576'],
             'logo.url' => ['sometimes', 'required_without:logo.url']
         ];
     }

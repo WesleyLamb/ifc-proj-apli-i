@@ -3,8 +3,9 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Str;
 
-class IsPNG implements Rule
+class IsBase64Image implements Rule
 {
     /**
      * Create a new rule instance.
@@ -26,9 +27,9 @@ class IsPNG implements Rule
     public function passes($attribute, $value)
     {
         $image = base64_decode($value);
-        $f = finfo_open();
-        $result = finfo_buffer($f, $image, FILEINFO_MIME_TYPE);
-        return $result == 'image/png';
+        if (!$image)
+            return false;
+        return Str::startsWith($value, 'data:image/');
     }
 
     /**
@@ -38,6 +39,6 @@ class IsPNG implements Rule
      */
     public function message()
     {
-        return 'The file is not a valid PNG';
+        return 'The file is not a valid image';
     }
 }

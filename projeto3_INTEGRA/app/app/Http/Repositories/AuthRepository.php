@@ -44,7 +44,7 @@ class AuthRepository implements AuthRepositoryInterface
     {
         $client = Client::where('password_client', 1)->first();
 
-        $http = Http::asForm()->post('http://auth.pgs/oauth/token', [
+        $http = Http::asForm()->post('http://nginx/oauth/token', [
             'grant_type' => 'password',
             'client_id' => $client->id,
             'client_secret' => $client->secret,
@@ -64,7 +64,7 @@ class AuthRepository implements AuthRepositoryInterface
     {
         $client = Client::where('password_client', 1)->first();
 
-        $http = Http::asForm()->post('http://auth.pgs/oauth/token', [
+        $http = Http::asForm()->post('http://nginx/oauth/token', [
             'grant_type' => 'refresh_token',
             'refresh_token' => $request->get('refresh_token'),
             'client_id' => $client->id,

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\User;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApplicationResource extends JsonResource
+class EstablishmentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +17,9 @@ class ApplicationResource extends JsonResource
         return [
             'id' => $this->uuid,
             'name' => $this->name,
-            'description' => $this->description,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'logo_url' => $this->getLogoUrl()
+            'document' => $this->document,
+            'document_type' => $this->document_type,
+            'logo_url' => $this->getLogoUrl(),
         ];
     }
 }

@@ -14,18 +14,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('modules', function (Blueprint $table) {
+        Schema::create('licenses', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(DB::raw('gen_random_uuid()'));
-            $table->foreignId('application_id');
-            $table->timestamps();
-            $table->softDeletes();
-            $table->string('name');
-            $table->text('description');
-            $table->decimal('value');
-            $table->string('logo_file')->nullable();
+            $table->string('licence_identifier');
+            $table->foreignId('establishment_id');
+            $table->date('expiration_date');
 
-            $table->foreign('application_id')->references('id')->on('applications');
+            $table->timestamps();
+
+            $table->foreign('establishment_id')->references('id')->on('establishments');
         });
     }
 
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modules');
+        Schema::dropIfExists('licenses');
     }
 };

@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\InModel;
-use App\Rules\IsPNG;
+use App\Rules\IsBase64Image;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -31,7 +31,7 @@ class StoreModuleRequest extends FormRequest
             'description' => ['required', 'string'],
             'value' => ['required', 'numeric'],
             'scopes' => ['required', 'array', 'min:1'],
-            'logo.data' => ['required', new IsPNG(), 'max:1048576']
+            'logo.data' => ['required', new IsBase64Image(), 'max:1048576']
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\IsPNG;
+use App\Rules\IsBase64Image;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateApplicationRequest extends FormRequest
@@ -27,8 +27,8 @@ class UpdateApplicationRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'logo.data' => ['sometimes', 'required_without:logo.data', new IsPNG(), 'max:1048576'],
-            'logo.url' => ['sometimes', 'required_without:logo.url']
+            'logo.data' => ['sometimes', 'required_without:logo.url', new IsBase64Image(), 'max:1048576'],
+            'logo.url' => ['sometimes', 'required_without:logo.data']
         ];
     }
 }

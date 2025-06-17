@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use App\Rules\IsBase64Image;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreApplicationRequest extends FormRequest
+class StoreEstablishmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +27,8 @@ class StoreApplicationRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'value' => ['required', 'numeric'],
+            'document' => ['required', 'string'],
+            'document_type' => ['required', Rule::in(['cnpj'])],
             'logo.data' => ['required', new IsBase64Image(), 'max:1048576']
         ];
     }

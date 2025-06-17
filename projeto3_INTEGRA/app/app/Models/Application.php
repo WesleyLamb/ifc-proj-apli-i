@@ -11,44 +11,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Application extends Model
 {
     use SoftDeletes, HasUuids;
-    /******************************************
-    *                                         *
-    *               PROPERTIES                *
-    *                                         *
-    ******************************************/
 
     public $table = 'applications';
     public $primaryKey = 'uuid';
-
-    /******************************************
-    *                                         *
-    *               ATTRIBUTES                *
-    *                                         *
-    ******************************************/
-
-    /******************************************
-    *                                         *
-    *                RELATIONS                *
-    *                                         *
-    ******************************************/
-
-    /******************************************
-    *                                         *
-    *                  SCOPES                 *
-    *                                         *
-    ******************************************/
 
     public function scopeFromFilters(Builder $query, ApplicationFilterDTO $dto)
     {
         // TODO: Fazer filtrar por $q
         return $query;
     }
-
-    /******************************************
-    *                                         *
-    *                 METHODS                 *
-    *                                         *
-    ******************************************/
 
     public function getLogoUrl()
     {

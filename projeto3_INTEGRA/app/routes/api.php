@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ApplicationController as AdminApplicationControll
 use App\Http\Controllers\Admin\ModuleController as AdminModuleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\User\ApplicationController as UserApplicationController;
+use App\Http\Controllers\User\EstablishmentController as UserEstablishmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,17 +20,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::group(['prefix' => 'v1', 'name' => 'api.v1'], function() {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     Route::post('refresh', [AuthController::class, 'refresh']);
+
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', [AuthController::class, 'logout']);
 
         Route::group(['prefix' => 'apps'], function() {
             Route::get('', [UserApplicationController::class, 'index']);
-            Route::get('{app_id}', [AdminApplicationController::class, 'show']);
+            Route::get('{app_id}', [UserApplicationController::class, 'show']);
+        });
+
+        Route::group(['prefix' => 'establishments'], function() {
+            Route::get('', [UserEstablishmentController::class, 'index']);
+            Route::post('', [UserEstablishmentController::class, 'store']);
+            Route::group(['prefix' => '{establishment_id}'], function() {
+                Route::get('', [UserEstablishmentController::class, 'show']);
+                // Route::put('', [UserEstablishmentController::class, 'update']);
+            });
         });
 
         // Rotas para administradores da plataforma

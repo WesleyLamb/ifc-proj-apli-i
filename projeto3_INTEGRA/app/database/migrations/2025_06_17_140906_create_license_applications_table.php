@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,17 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('modules', function (Blueprint $table) {
+        Schema::create('license_applications', function (Blueprint $table) {
             $table->id();
-            $table->uuid()->default(DB::raw('gen_random_uuid()'));
-            $table->foreignId('application_id');
             $table->timestamps();
-            $table->softDeletes();
-            $table->string('name');
-            $table->text('description');
-            $table->decimal('value');
-            $table->string('logo_file')->nullable();
+            $table->foreignId('license_id');
+            $table->foreignId('application_id');
 
+            $table->foreign('license_id')->references('id')->on('licenses');
             $table->foreign('application_id')->references('id')->on('applications');
         });
     }
@@ -36,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modules');
+        Schema::dropIfExists('license_applications');
     }
 };

@@ -5,9 +5,11 @@ namespace App\Http\Repositories;
 use App\Http\DTO\ApplicationFilterDTO;
 use App\Http\DTO\PaginatorDTO;
 use App\Http\Repositories\Contracts\ApplicationRepositoryInterface;
+use App\Http\Repositories\Contracts\ModuleRepositoryInterface;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Application;
+use App\Models\Module;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -25,25 +27,33 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         $this->applicationFilter = ApplicationFilterDTO::fromRequest($request);
     }
 
-    public function findAll(Request $request): LengthAwarePaginator
+    public function getAll(Request $request): LengthAwarePaginator
     {
         return Application::fromFilters($this->applicationFilter)->paginate($this->paginator->per_page);
     }
 
     public function store(StoreApplicationRequest $request): Application
     {
-        $model = new Application();
-        $model->name = $request->get('name');
-        $model->description = $request->get('description');
+        $application = new Application();
+        $application->name = $request->get('name');
+        $application->description = $request->get('description');
 
         $file = Str::random(32).'.png';
 
         Storage::put($file, base64_decode($request->get('logo')['data']));
 
-        $model->logo_file = $file;
-        $model->save();
+        $application->logo_file = $file;
+        $application->save();
+        $application->refresh();
 
-        return $model->refresh();
+        $module = new Module();
+        $module->application_id = $application->id;
+        $module->name = 'default';
+        $module->description = 'Basic features';
+        $module->value = $request->get('value');
+
+
+        return $application->refresh();
     }
 
     public function findOrFail(string $appId): Application

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 interface ApplicationRepositoryInterface
 {
-    public function findAll(Request $request): LengthAwarePaginator;
+    public function getAll(Request $request): LengthAwarePaginator;
     public function store(StoreApplicationRequest $request): Application;
     public function findOrFail(string $appId): Application;
     public function update(string $appId, UpdateApplicationRequest $request): Application;
