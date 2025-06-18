@@ -38,7 +38,7 @@ Route::group(['prefix' => 'v1', 'name' => 'api.v1'], function() {
             Route::post('', [UserEstablishmentController::class, 'store']);
             Route::group(['prefix' => '{establishment_id}'], function() {
                 Route::get('', [UserEstablishmentController::class, 'show']);
-                // Route::put('', [UserEstablishmentController::class, 'update']);
+                Route::put('', [UserEstablishmentController::class, 'update'])->middleware('can.establishment:establishment.update');
             });
         });
 

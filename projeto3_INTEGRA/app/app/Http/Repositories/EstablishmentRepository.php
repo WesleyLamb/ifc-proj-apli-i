@@ -7,6 +7,7 @@ use App\Http\DTO\PaginatorDTO;
 use App\Http\Repositories\Contracts\EstablishmentRepositoryInterface;
 use App\Http\Repositories\Contracts\UserRepositoryInterface;
 use App\Http\Requests\StoreEstablishmentRequest;
+use App\Http\Requests\UpdateEstablishmentRequest;
 use App\Models\Establishment;
 use App\Models\UserEstablishment;
 use App\Models\UserEstablishmentPermission;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Nette\NotImplementedException;
 
 class EstablishmentRepository implements EstablishmentRepositoryInterface
 {
@@ -75,8 +77,38 @@ class EstablishmentRepository implements EstablishmentRepositoryInterface
         return $establishment->refresh();
     }
 
-    public function findOrFailOfUser(int $internalUserId, Request $request): Establishment
+    public function findOrFailOfUser(int $internalUserId, string $establishmentId): Establishment
     {
-        return Establishment::fromUser($internalUserId)->findOrFail($request->route('establishment_id'));
+        return Establishment::fromUser($internalUserId)->findOrFail($establishmentId);
+    }
+
+    public function update(int $internalUserId, string $establishmentId, UpdateEstablishmentRequest $request): Establishment
+    {
+        $establishment = $this->findOrFailOfUser($internalUserId, $establishmentId);
+
+        $establishment->name = $request->get('name');
+        $establishment->document = $request->get('document');
+        $establishment->document_type = $request->get('document_type');
+
+        if ($request->has('logo.data')) {
+            Storage::delete($establishment->logo_file);
+            $file = Str::random(32).'.png';
+
+            $base64_image = $request->get('logo')['data'];
+            @list($type, $file_data) = explode(';', $base64_image);
+            @list(, $file_data) = explode(',', $file_data);
+
+            ob_start();
+            imagepng(imagecreatefromstring(base64_decode($file_data)), null);
+            $file_data = ob_get_contents();
+            ob_end_clean();
+
+            Storage::put($file, $file_data);
+
+            $establishment->logo_file = $file;
+        }
+
+        $establishment->save();
+        return $establishment->refresh();
     }
 }

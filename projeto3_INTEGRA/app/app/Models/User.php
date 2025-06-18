@@ -3,9 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Http\Repositories\Contracts\EstablishmentRepositoryInterface;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\App;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -69,6 +73,16 @@ class User extends Authenticatable
         return $this->hasMany(UserRole::class, 'user_id', 'id');
     }
 
+    public function establishments()
+    {
+        return $this->hasManyThrough(Establishment::class, UserEstablishment::class, 'user_id', 'id', 'id', 'establishment_id');
+    }
+
+    public function userEstablishmentPermission()
+    {
+        return $this->belongsToMany(UserEstablishmentPermission::class, UserEstablishment::class, 'user_id', 'id', 'id', 'user_establishment_id');
+    }
+
     /******************************************
     *                                         *
     *                  SCOPES                 *
@@ -84,5 +98,23 @@ class User extends Authenticatable
     public function hasRole(string $role)
     {
         return $this->roles()->firstWhere('role', $role) ? true : false;
+    }
+
+    public function canOnEstablishment(string $establishmentId, string $ability)
+    {
+        $grantedPermissions = [];
+        $abilities = explode('.', $ability);
+        for ($i = 0; $i < substr_count($ability, '.') + 1; $i++) {
+            $grantedPermissions[$i] = null;
+            for ($j = 0; $j < $i; $j++) {
+                $grantedPermissions[$i] .= $abilities[$j] . '.';
+            }
+            $grantedPermissions[$i] .= '*';
+        }
+        $grantedPermissions[] = $ability;
+        // dd($ability, substr_count($ability, '.'), explode('.',$ability));
+        $establishmentRepository = App::make(EstablishmentRepositoryInterface::class);
+        $permission = $this->userEstablishmentPermission()->wherePivot('establishment_id', '=', $establishmentRepository->findOrFailOfUser($this->id, $establishmentId)->id)->whereIn('permission', $grantedPermissions)->first();
+        return $permission == true;
     }
 }

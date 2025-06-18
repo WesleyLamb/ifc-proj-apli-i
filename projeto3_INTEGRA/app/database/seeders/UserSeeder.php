@@ -19,6 +19,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        Artisan::call('passport:client --password -q');
+
         User::insert([
             'name' => 'Administrator',
             'email' => 'admin@castorsoft.localhost',
@@ -30,7 +32,5 @@ class UserSeeder extends Seeder
             'user_id' => User::first()->id,
             'role' => 'admin'
         ]);
-
-        Artisan::call('passport:client --password -q');
     }
 }

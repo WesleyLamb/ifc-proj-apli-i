@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Repositories\Contracts\EstablishmentRepositoryInterface;
 use App\Http\Repositories\EstablishmentRepository;
 use App\Http\Requests\StoreEstablishmentRequest;
+use App\Http\Requests\UpdateEstablishmentRequest;
 use App\Http\Resources\User\EstablishmentSummaryResource as UserEstablishmentSummaryResource;
 use App\Http\Resources\User\EstablishmentResource as UserEstablishmentResource;
 use Illuminate\Http\Request;
@@ -32,6 +33,11 @@ class EstablishmentController extends Controller
 
     public function show(Request $request)
     {
-        return new UserEstablishmentResource($this->establishmentRepository->findOrFailOfUser(Auth::user()->id, $request));
+        return new UserEstablishmentResource($this->establishmentRepository->findOrFailOfUser(Auth::user()->id, $request->route('establishment_id')));
+    }
+
+    public function update(UpdateEstablishmentRequest $request)
+    {
+        return new UserEstablishmentResource($this->establishmentRepository->update(Auth::user()->id, $request->route('establishment_id'), $request));
     }
 }
