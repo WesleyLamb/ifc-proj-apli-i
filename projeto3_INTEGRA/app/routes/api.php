@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ModuleController as AdminModuleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\User\ApplicationController as UserApplicationController;
 use App\Http\Controllers\User\EstablishmentController as UserEstablishmentController;
+use App\Http\Controllers\User\EstablishmentLicenseController as UserEstablishmentLicenseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,10 @@ Route::group(['prefix' => 'v1', 'name' => 'api.v1'], function() {
             Route::group(['prefix' => '{establishment_id}'], function() {
                 Route::get('', [UserEstablishmentController::class, 'show']);
                 Route::put('', [UserEstablishmentController::class, 'update'])->middleware('can.establishment:establishment.update');
+
+                Route::group(['prefix' => 'license'], function () {
+                    Route::get('', [UserEstablishmentLicenseController::class, 'index']);
+                });
             });
         });
 

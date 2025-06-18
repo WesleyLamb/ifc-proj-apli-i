@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('licenses', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(DB::raw('gen_random_uuid()'));
-            $table->string('licence_identifier');
+            $table->string('license_identifier');
             $table->foreignId('establishment_id');
             $table->date('expiration_date');
 

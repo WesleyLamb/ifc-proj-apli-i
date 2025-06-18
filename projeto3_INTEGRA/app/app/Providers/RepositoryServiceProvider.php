@@ -6,9 +6,11 @@ use App\Http\Repositories\ApplicationRepository;
 use App\Http\Repositories\AuthRepository;
 use App\Http\Repositories\Contracts\ApplicationRepositoryInterface;
 use App\Http\Repositories\Contracts\AuthRepositoryInterface;
+use App\Http\Repositories\Contracts\LicenseRepositoryInterface;
 use App\Http\Repositories\Contracts\EstablishmentRepositoryInterface;
 use App\Http\Repositories\Contracts\ModuleRepositoryInterface;
 use App\Http\Repositories\Contracts\UserRepositoryInterface;
+use App\Http\Repositories\LicenseRepository;
 use App\Http\Repositories\EstablishmentRepository;
 use App\Http\Repositories\ModuleRepository;
 use App\Http\Repositories\UserRepository;
@@ -46,6 +48,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             UserRepositoryInterface::class,
             UserRepository::class
+        );
+
+        $this->app->bind(
+            LicenseRepositoryInterface::class,
+            LicenseRepository::class
         );
     }
 

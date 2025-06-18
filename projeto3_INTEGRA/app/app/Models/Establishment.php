@@ -19,6 +19,11 @@ class Establishment extends Model
         return $this->hasManyThrough(User::class, UserEstablishment::class, 'establishment_id', 'id', 'id', 'user_id');
     }
 
+    public function licenses()
+    {
+        return $this->hasOne(License::class, 'establishment_id', 'id');
+    }
+
     public function scopeFromUser(Builder $query, int $internalUserId)
     {
         return $query->whereHas('users', function($q) use ($internalUserId) {

@@ -9,8 +9,11 @@ use App\Http\Repositories\Contracts\UserRepositoryInterface;
 use App\Http\Requests\StoreEstablishmentRequest;
 use App\Http\Requests\UpdateEstablishmentRequest;
 use App\Models\Establishment;
+use App\Models\License;
 use App\Models\UserEstablishment;
 use App\Models\UserEstablishmentPermission;
+use DateInterval;
+use DateTimeImmutable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,6 +76,12 @@ class EstablishmentRepository implements EstablishmentRepositoryInterface
         $userEstablishmentPermission->user_establishment_id = $userEstablishment->id;
         $userEstablishmentPermission->permission = '*';
         $userEstablishmentPermission->save();
+
+        $license = new License();
+        $license->establishment_id = $establishment->id;
+        $license->license_identifier = Str::random(10);
+        $license->expiration_date = (new DateTimeImmutable())->add(new DateInterval('P7D'))->setTime(0, 0, 0);
+        $license->save();
 
         return $establishment->refresh();
     }

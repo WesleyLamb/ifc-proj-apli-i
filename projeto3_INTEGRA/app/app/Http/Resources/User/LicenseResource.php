@@ -3,9 +3,8 @@
 namespace App\Http\Resources\User;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\LicenseResource as UserLicenseResource;
 
-class EstablishmentResource extends JsonResource
+class LicenseResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +16,10 @@ class EstablishmentResource extends JsonResource
     {
         return [
             'id' => $this->uuid,
-            'name' => $this->name,
-            'document' => $this->document,
-            'document_type' => $this->document_type,
-            'logo_url' => $this->getLogoUrl(),
+            'license' => $this->license_identifier,
+            'expiration_date' => $this->expiration_date,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

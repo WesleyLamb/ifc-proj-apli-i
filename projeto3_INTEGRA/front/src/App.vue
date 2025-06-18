@@ -12,9 +12,14 @@
 </script>
 
 <template>
-    <NavBar />
-    <main class="lg:ml-64 pt-16">
-    <MenuLateral />
+    <div v-if="$route.name != 'login'">
+        <NavBar  />
+        <main class="lg:ml-64 pt-16">
+            <MenuLateral />
+            <RouterView />
+        </main>
+    </div>
+    <div v-else>
         <RouterView />
-    </main>
+    </div>
 </template>
