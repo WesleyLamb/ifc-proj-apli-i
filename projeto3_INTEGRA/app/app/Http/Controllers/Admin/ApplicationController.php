@@ -22,7 +22,7 @@ class ApplicationController extends Controller
 
     public function index(Request $request)
     {
-        return ApplicationSummaryResource::collection($this->applicationRepository->findAll($request));
+        return ApplicationSummaryResource::collection($this->applicationRepository->getAll($request));
     }
 
     public function store(StoreApplicationRequest $request)
@@ -32,17 +32,17 @@ class ApplicationController extends Controller
 
     public function show(Request $request)
     {
-        return new ApplicationResource($this->applicationRepository->findOrFail($request->route('app_id')));
+        return new ApplicationResource($this->applicationRepository->findOrFail($request->route('application_id')));
     }
 
     public function update(UpdateApplicationRequest $request)
     {
-        return new ApplicationResource($this->applicationRepository->update($request->route('app_id'), $request));
+        return new ApplicationResource($this->applicationRepository->update($request->route('application_id'), $request));
     }
 
     public function delete(Request $request)
     {
-        $this->applicationRepository->delete($request->route('app_id'));
+        $this->applicationRepository->delete($request->route('application_id'));
         return response('', 204);
     }
 }

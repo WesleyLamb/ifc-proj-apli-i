@@ -27,6 +27,6 @@ class ApplicationController extends Controller
 
     public function show(Request $request)
     {
-        return new UserApplicationResource($this->applicationRepository->findOrFail($request->route('app_id')));
+        return new UserApplicationResource($this->applicationRepository->findOrFail($request->route('application_id')));
     }
 }

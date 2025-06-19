@@ -7,5 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class LicenseApplication extends Model
 {
-    use HasFactory;
+    public $table = 'license_applications';
+    public $primaryKey = 'id';
+
+    public function application()
+    {
+        return $this->belongsTo(Application::class, 'application_id', 'id');
+    }
+
+    public function modules()
+    {
+        return $this->hasMany(LicenseApplicationModule::class, 'license_application_id', 'id');
+    }
 }

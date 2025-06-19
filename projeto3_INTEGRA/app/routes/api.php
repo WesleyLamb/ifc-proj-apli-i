@@ -31,7 +31,7 @@ Route::group(['prefix' => 'v1', 'name' => 'api.v1'], function() {
 
         Route::group(['prefix' => 'apps'], function() {
             Route::get('', [UserApplicationController::class, 'index']);
-            Route::get('{app_id}', [UserApplicationController::class, 'show']);
+            Route::get('{application_id}', [UserApplicationController::class, 'show']);
         });
 
         Route::group(['prefix' => 'establishments'], function() {
@@ -39,10 +39,18 @@ Route::group(['prefix' => 'v1', 'name' => 'api.v1'], function() {
             Route::post('', [UserEstablishmentController::class, 'store']);
             Route::group(['prefix' => '{establishment_id}'], function() {
                 Route::get('', [UserEstablishmentController::class, 'show']);
-                Route::put('', [UserEstablishmentController::class, 'update'])->middleware('can.establishment:establishment.update');
+                Route::put('', [UserEstablishmentController::class, 'update'])->middleware('can.on.establishment:establishment.update');
 
-                Route::group(['prefix' => 'license'], function () {
+                Route::group(['prefix' => 'licenses'], function () {
                     Route::get('', [UserEstablishmentLicenseController::class, 'index']);
+
+                    Route::group(['prefix' => '{license_id}'], function () {
+                        Route::get('', [UserEstablishmentLicenseController::class, 'show']);
+
+                        Route::group(['prefix' => 'application'], function () {
+                            Route::post('', [UserEstablishmentLicenseController::class, 'addApplication'])->middleware('can.on.establishment:establishment.license');
+                        });
+                    });
                 });
             });
         });
@@ -53,7 +61,7 @@ Route::group(['prefix' => 'v1', 'name' => 'api.v1'], function() {
                 Route::get('', [AdminApplicationController::class, 'index']);
                 Route::post('', [AdminApplicationController::class, 'store']);
 
-                Route::group(['prefix' => '{app_id}'], function() {
+                Route::group(['prefix' => '{application_id}'], function() {
                     Route::get('', [AdminApplicationController::class, 'show']);
                     Route::put('', [AdminApplicationController::class, 'update']);
                     Route::delete('', [AdminApplicationController::class, 'delete']);

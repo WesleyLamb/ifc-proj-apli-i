@@ -40,7 +40,16 @@ class ApplicationRepository implements ApplicationRepositoryInterface
 
         $file = Str::random(32).'.png';
 
-        Storage::put($file, base64_decode($request->get('logo')['data']));
+        $base64_image = $request->get('logo')['data'];
+        @list($type, $file_data) = explode(';', $base64_image);
+        @list(, $file_data) = explode(',', $file_data);
+
+        ob_start();
+        imagepng(imagecreatefromstring(base64_decode($file_data)), null);
+        $file_data = ob_get_contents();
+        ob_end_clean();
+
+        Storage::put($file, $file_data);
 
         $application->logo_file = $file;
         $application->save();
@@ -71,8 +80,16 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         if ($request->has('logo.data')) {
             $newFile = Str::random(32).'.png';
 
-            Storage::delete($model->logo_file);
-            Storage::put($newFile, base64_decode($request->get('logo')['data']));
+            $base64_image = $request->get('logo')['data'];
+            @list($type, $file_data) = explode(';', $base64_image);
+            @list(, $file_data) = explode(',', $file_data);
+
+            ob_start();
+            imagepng(imagecreatefromstring(base64_decode($file_data)), null);
+            $file_data = ob_get_contents();
+            ob_end_clean();
+
+            Storage::put($newFile, $file_data);
             $model->logo_file = $newFile;
         }
 

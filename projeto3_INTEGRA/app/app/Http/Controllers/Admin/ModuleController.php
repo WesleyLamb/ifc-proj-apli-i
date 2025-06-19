@@ -27,7 +27,7 @@ class ModuleController extends Controller
     public function index(Request $request)
     {
         return ModuleSummaryResource::collection($this->moduleRepository->findAllOfApplication(
-            $this->applicationRepository->findOrFail($request->route('app_id'))->id,
+            $this->applicationRepository->findOrFail($request->route('application_id'))->id,
             $request
         ));
     }
@@ -35,7 +35,7 @@ class ModuleController extends Controller
     public function store(StoreModuleRequest $request)
     {
         return new ModuleResource($this->moduleRepository->store(
-            $this->applicationRepository->findOrFail($request->route('app_id'))->id,
+            $this->applicationRepository->findOrFail($request->route('application_id'))->id,
                 $request
         ));
     }
@@ -43,7 +43,7 @@ class ModuleController extends Controller
     public function show(Request $request)
     {
         return new ModuleResource($this->moduleRepository->findOrFail(
-            $this->applicationRepository->findOrFail($request->route('app_id'))->id,
+            $this->applicationRepository->findOrFail($request->route('application_id'))->id,
             $request->route('module_id')
         ));
     }
@@ -51,7 +51,7 @@ class ModuleController extends Controller
     public function update(UpdateModuleRequest $request)
     {
         return new ModuleResource($this->moduleRepository->update(
-            $this->applicationRepository->findOrFail($request->route('app_id'))->id,
+            $this->applicationRepository->findOrFail($request->route('application_id'))->id,
             $request->route('module_id'),
             $request
         ));

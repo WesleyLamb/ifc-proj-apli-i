@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\DTO\LicenseFilterDTO;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -20,10 +21,15 @@ class License extends Model
 
     public function applications()
     {
-        return $this->hasManyThrough(Application::class, LicenseApplication::class, '1', '2', '3', '4');
+        return $this->hasManyThrough(Application::class, LicenseApplication::class, 'license_id', 'id', 'id', 'application_id');
     }
 
-    public function applicationModules()
+    public function licenseApplications()
+    {
+        return $this->hasMany(LicenseApplication::class, 'license_id', 'id');
+    }
+
+    public function modules()
     {
         return $this->belongsToMany(LicenseApplicationModule::class, LicenseApplication::class, 'license_id', 'id', 'id', 'license_application_id');
     }
@@ -31,5 +37,11 @@ class License extends Model
     public function scopeFromEstablishment(Builder $query, int $internalEstablishmentId)
     {
         return $query->where('establishment_id', $internalEstablishmentId);
+    }
+
+    public function scopeFromFilter(Builder $query, LicenseFilterDTO $dto)
+    {
+        // TODO: Fazer filtrar por $q
+        return $query;
     }
 }
