@@ -1,10 +1,10 @@
 <script>
 export default {
+    emits: ['button-click'],
     props: {
         type: String,
         text: String,
         disabled: Boolean,
-        click: Function,
     },
     methods: {
 

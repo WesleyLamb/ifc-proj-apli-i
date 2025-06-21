@@ -36,7 +36,7 @@ Route::group(['prefix' => 'v1', 'name' => 'api.v1'], function() {
 
         Route::get('users/me', [UserUserController::class, 'showMe']);
 
-        Route::group(['prefix' => 'apps'], function() {
+        Route::group(['prefix' => 'applications'], function() {
             Route::get('', [UserApplicationController::class, 'index']);
             Route::get('{application_id}', [UserApplicationController::class, 'show']);
         });

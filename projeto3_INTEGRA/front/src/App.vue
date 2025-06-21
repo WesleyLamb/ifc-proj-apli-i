@@ -20,6 +20,7 @@ export default {
     data: function() {
         return {
             user: null,
+            establishment: null,
         }
     },
     provide: function() {
@@ -34,8 +35,8 @@ export default {
     <!-- Telas que não possuem o navbar -->
     <RouterView v-if="['auth.sign-in', 'auth.sign-up', 'auth.forgot-password', 'auth.register'].includes($route.name)" />
     <!-- Telas que possuem o navbar -->
-    <div v-else>
-        <NavBar  />
+    <template v-else>
+        <NavBar/>
         <Sidebar>
             <SidebarItem :to="{ name: 'dashboard' }" description="Dashboard">
                 <template #icon>
@@ -48,7 +49,7 @@ export default {
                     </svg>
                 </template>
             </SidebarItem>
-            <SidebarItem :to="{name: 'user.apps'}" description="Apps">
+            <SidebarItem :to="{name: 'user.applications'}" description="Aplicativos">
                 <template #icon>
                     <svg class="w-6 h-6 text-gray-500" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -72,5 +73,5 @@ export default {
         <main class="lg:ml-64 pt-14">
             <RouterView />
         </main>
-    </div>
+    </template>
 </template>

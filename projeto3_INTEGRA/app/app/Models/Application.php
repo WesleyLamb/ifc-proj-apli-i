@@ -15,6 +15,11 @@ class Application extends Model
     public $table = 'applications';
     public $primaryKey = 'uuid';
 
+    public function modules()
+    {
+        return $this->hasMany(Module::class, 'application_id', 'id');
+    }
+
     public function scopeFromFilters(Builder $query, ApplicationFilterDTO $dto)
     {
         // TODO: Fazer filtrar por $q

@@ -1,7 +1,5 @@
 import http from '@/classes/http'
-import { REFRESH_TOKEN, ACCESS_TOKEN, TOKEN_EXPIRATION } from '@/constants';
-
-const API_URL = '/api/v1';
+import { REFRESH_TOKEN, ACCESS_TOKEN, TOKEN_EXPIRATION, API_URL } from '@/constants';
 
 function updateTokens(access_token, refresh_token, expires_in) {
   let d = new Date();
@@ -18,8 +16,12 @@ export default {
 
   isAuthenticated() {
     const access_token = localStorage.getItem(ACCESS_TOKEN);
-    const d = new Date(localStorage.getItem(TOKEN_EXPIRATION));
-    return access_token && d.getTime() > (new Date()).getTime();
+    const token_expiration = localStorage.getItem(TOKEN_EXPIRATION);
+    if (access_token && token_expiration) {
+      const d = new Date(token_expiration);
+      return access_token && d.getTime() > (new Date()).getTime();
+    }
+    return false;
   },
 
   logout() {

@@ -2,6 +2,7 @@
 export default {
     props: {
         type: String,
+        accept: String,
         id: String,
         label: String,
         placeholder: String,
@@ -13,9 +14,10 @@ export default {
 </script>
 
 <template>
-    <div v-if="['text', 'password', 'email' ].includes(type)">
+    <div class="px-2" v-if="['text', 'password', 'email', 'file' ].includes(type)">
         <label :for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ label }}</label>
-        <input :type="type" :name="id" :id="id" @input="$emit('update:value', $event.target.value)" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" :placeholder="placeholder" :required="required">
+        <input v-if="type != 'file'" :type="type" :name="id" :id="id" @input="$emit('update:value', $event.target.value)" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" :placeholder="placeholder" :required="required">
+        <input v-else :type="type" :name="id" :accept="accept ? accept : null" :id="id" @change="$emit('update:value', $event.target.files[0])" class="hover:cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" :placeholder="placeholder" :required="required">
     </div>
     <div v-else-if="['checkbox'].includes(type)">
         <div class="flex items-center h-5">

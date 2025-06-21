@@ -17,6 +17,7 @@ class ApplicationSummaryResource extends JsonResource
         return [
             'id' => $this->uuid,
             'name' => $this->name,
+            'value' => (float)$this->modules()->first()->value,
             'logo_url' => $this->getLogoUrl()
         ];
     }
