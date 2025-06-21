@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.14",
+    "axios": "^1.10.0",
     "flowbite": "^3.1.2",
     "serve": "^14.2.4",
     "tailwindcss": "^4.1.10",

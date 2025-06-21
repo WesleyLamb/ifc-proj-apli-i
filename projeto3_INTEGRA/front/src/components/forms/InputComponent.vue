@@ -19,7 +19,7 @@ export default {
     </div>
     <div v-else-if="['checkbox'].includes(type)">
         <div class="flex items-center h-5">
-            <input :id="id" :name="id" :type="type" @input="$emit('update:value', $event.target.value)" class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300" :required="required">
+            <input :id="id" :name="id" :type="type" @click="$emit('update:value', $event.target.checked)" class="w-4 h-4 border-gray-300 rounded  checked:bg-blue-700 hover:bg-blue-500 focus:ring-3 focus:ring-blue-500 appearance-auto" :required="required">
             <label :for="id" class="ml-3 text-sm font-medium text-gray-900">{{ label }}</label>
         </div>
     </div>

@@ -55,7 +55,7 @@ class AuthRepository implements AuthRepositoryInterface
 
         if ($http->status() != 200) {
             Log::error('Error trying to authenticate ' . $request->get('username') . ': ' . json_encode($http->json()));
-            throw new AuthException('Unable to authenticate, try again later.', 101);
+            throw new AuthException($http->json()['message'], 101);
         }
         return LoginResponseDTO::fromResponseJson($http->json());
     }
@@ -83,7 +83,9 @@ class AuthRepository implements AuthRepositoryInterface
 
     public function logout(): bool
     {
-        $tokenId = Auth::user()->token()->id;
+        /** @var User $user */
+        $user = Auth::user();
+        $tokenId = $user->token()->id;
         $this->tokenRepository->revokeAccessToken($tokenId);
         // Revoke all of the token's refresh tokens...
 

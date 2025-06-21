@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\User\ApplicationController as UserApplicationController;
 use App\Http\Controllers\User\EstablishmentController as UserEstablishmentController;
 use App\Http\Controllers\User\EstablishmentLicenseController as UserEstablishmentLicenseController;
+use App\Http\Controllers\User\UserController as UserUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,12 +23,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'v1', 'name' => 'api.v1'], function() {
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::group(['prefix' => 'auth'], function() {
+        Route::post('register', [AuthController::class, 'register']);
+        Route::post('login', [AuthController::class, 'login']);
+        Route::post('refresh', [AuthController::class, 'refresh']);
+
+        Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:api');
+    });
 
     Route::group(['middleware' => 'auth:api'], function() {
-        Route::get('logout', [AuthController::class, 'logout']);
+
+
+        Route::get('users/me', [UserUserController::class, 'showMe']);
 
         Route::group(['prefix' => 'apps'], function() {
             Route::get('', [UserApplicationController::class, 'index']);
