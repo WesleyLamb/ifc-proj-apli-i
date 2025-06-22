@@ -19,6 +19,8 @@ RUN apt-get update && apt-get --fix-broken install -y \
     zip \
     unzip
 
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-configure ftp --with-openssl-dir=/usr
 RUN docker-php-ext-install pgsql pdo_pgsql mbstring exif pcntl bcmath gd zip ftp

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ACCESS_TOKEN } from "@/constants";
 
 const http = axios.create({
-  baseURL: "http://painel.castorsoft.localhost",
+  baseURL: "http://painel.pgs.localhost",
 });
 
 http.interceptors.request.use(config => {

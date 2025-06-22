@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
         User::insert([
             'name' => 'Administrator',
-            'email' => 'admin@castorsoft.localhost',
+            'email' => 'admin@pgs.localhost',
             'email_verified_at' => new DateTime(),
             'password' => Hash::make('yametekudasai'),
         ]);
