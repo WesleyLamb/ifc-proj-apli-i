@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'name' => 'Administrator',
             'email' => 'admin@pgs.localhost',
             'email_verified_at' => new DateTime(),
-            'password' => Hash::make('yametekudasai'),
+            'password' => Hash::make('12345678'),
         ]);
 
         UserRole::insert([
