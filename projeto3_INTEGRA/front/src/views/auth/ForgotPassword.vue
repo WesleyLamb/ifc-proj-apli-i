@@ -21,7 +21,7 @@ export default {
                 class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
                 <img src="../assets/logo.svg" class="mr-4 h-11"
                     alt="FlowBite Logo">
-                <span>CastorSoft</span>
+                <span>PGS</span>
             </a>
             <!-- Card -->
             <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">

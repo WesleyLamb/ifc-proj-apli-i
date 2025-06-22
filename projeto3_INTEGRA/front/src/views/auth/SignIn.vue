@@ -43,8 +43,8 @@ export default {
             <a href="/"
                 class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
                 <img src="@/assets/logo.svg" class="mr-4 h-11"
-                    alt="CastorSoft Logo">
-                <span>CastorSoft</span>
+                    alt="PGS Logo">
+                <span>PGS</span>
             </a>
             <!-- Card -->
             <CenteredCard>
@@ -53,10 +53,6 @@ export default {
                 <form class="mt-8 space-y-6" action="">
                     <InputComponent type="email" id="email" label="Seu e-mail" placeholder="email@exemplo.com" required v-model:value="username" />
                     <InputComponent type="password" id="password" label="Sua senha" placeholder="••••••••" required v-model:value="password" />
-                    <div class="flex items-start">
-                        <InputComponent type="checkbox" id="remember" label="Lembrar-me" required v-model:value="remember_me"/>
-                        <LinkComponent :to="{name: 'auth.forgot-password'}" label="Esqueceu sua senha?" />
-                    </div>
                     <ButtonComponent type="button" text="Login" @button-click="this.error_message = null; this.attemptLogin()" />
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
                         Não é registrado? <LinkComponent :to="{name: 'auth.sign-up'}" label="Crie uma conta" />

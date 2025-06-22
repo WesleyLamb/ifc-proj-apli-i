@@ -52,19 +52,10 @@ export default {
       });
   },
 
-  async register(usuario) {
-    try {
-      const response = await http.post(`${API_URL}/users`, {
-        'name': usuario.nome,
-        'email': usuario.email,
-        'phone': usuario.telefone,
-        'password': usuario.senha,
+  register(data) {
+      return http.post(`${API_URL}/auth/register`, data).then((response) => {
+        updateTokens(response.data.access_token, response.data.refresh_token, response.data.expires_in);
       });
-      return response.data;
-    } catch (error) {
-      console.error('Erro ao cadastrar usuário:', error);
-      throw error;
-    }
   },
 
   async listarUsuarios() {
