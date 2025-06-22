@@ -4,6 +4,12 @@ export default {
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
+  safelist: [
+    'bg-blue-500',
+    'bg-blue-700',
+    'bg-gray-500',
+    'bg-blue-700'
+  ],
   theme: {
   },
   plugins: [],

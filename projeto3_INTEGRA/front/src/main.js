@@ -20,12 +20,10 @@ const routes = [
     { path: '/auth/forgot-password', component: ForgotPassword, name: 'auth.forgot-password' },
     { path: '/applications', component: UserApplications, name: 'user.applications'},
     { path: '/establishments/register', component: EstablishmentRegister, name: 'user.establishments.register'},
-    // { path: '/admin', beforeEnter() {
-
-    //     }, children: [
-    //         { path: 'applications', component: AdminApplications, name: 'admin.applications' }
-    //     ]
-    // }
+    { path: '/admin', children: [
+            { path: 'applications', component: AdminApplications, name: 'admin.applications' }
+        ]
+    }
 ]
 
 const router = createRouter({
@@ -45,10 +43,17 @@ router.beforeEach(async (to, from) => {
             // Se der cucaracha na reautenticação, volta pro login
             return { name: 'auth.sign-in'};
         }
-
         if (!['user.establishments.register'].includes(to.name)) {
-            if (!UserEstablishmentService.establishment && !UserEstablishmentService.getSelectedEstablishment()) {
-                return { name: 'user.establishments.register' };
+            const response = await AuthService.getAuthenticatedUser();
+            const user = response.data.data;
+
+            if (!user.roles.includes('admin') && !UserEstablishmentService.getDefaultEstablishmentId()) {
+                let response = await UserEstablishmentService.getEstablishments();
+                if (response.data.data.length == 0) {
+                    return { name: 'user.establishments.register' };
+                } else {
+                    UserEstablishmentService.setSelectedEstablishment(response.data.data[0]);
+                }
             }
         }
     }

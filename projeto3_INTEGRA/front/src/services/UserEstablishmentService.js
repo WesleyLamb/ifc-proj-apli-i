@@ -5,22 +5,21 @@ var establishment;
 
 export default {
     establishment,
-    getSelectedEstablishment() {
-        const establishmentId = localStorage.getItem(SELECTED_ESTABLISHMENT);
-        if (establishmentId) {
-            return http.get(`${API_URL}/establishments/${establishmentId}`).then((response) => {
-                establishment = response.data.data;
-            });
-        } else {
-            return false;
-        }
+
+    getDefaultEstablishmentId() {
+        return localStorage.getItem(SELECTED_ESTABLISHMENT);
     },
     setSelectedEstablishment(establishment) {
         localStorage.setItem(SELECTED_ESTABLISHMENT, establishment.id);
-        return this.getSelectedEstablishment();
+        return this.showEstablishment(establishment.id).then((response) => {
+            this.establishment = response.data.data;
+        });
     },
     getEstablishments() {
         return http.get(`${API_URL}/establishments`);
+    },
+    showEstablishment(establishmentId) {
+        return http.get(`${API_URL}/establishments/${establishmentId}`);
     },
     registerEstablishment(data) {
         return http.post(`${API_URL}/establishments`, data).then((response) => {

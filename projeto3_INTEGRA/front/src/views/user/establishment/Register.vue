@@ -41,6 +41,8 @@ export default {
                 document: this.document,
                 document_type: this.document_type,
                 logo: this.logo
+            }).then((response) => {
+                this.$router.push({path: '/'});
             });
         }
     },

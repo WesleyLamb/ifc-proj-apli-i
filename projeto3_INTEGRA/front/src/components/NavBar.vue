@@ -14,16 +14,20 @@ export default {
             this.$parent.user = response.data.data;
             this.user = response.data.data;
         });
-
-        // if (!UserEstablishmentService.getSelectedEstablishment()?.then((response) => {
-        //     this.$parent.establishment = response.data.data;
-        //     this.establishment = response.data.data;
-        // })) {
-        //     UserEstablishmentService.getEstablishments().then((response) => {
-        //         if (response.data.data.length > 0) {
-        //             UserEstablishmentService.setSelectedEstablishment(response.data.data[0]);
-        //         }
-        //     });
+        let establishmentId;
+        if (establishmentId = UserEstablishmentService.getDefaultEstablishmentId()) {
+            UserEstablishmentService.showEstablishment(establishmentId).then((response) => {
+                this.establishment = response.data.data;
+            })
+        }
+        // try {
+        //     UserEstablishmentService.getSelectedEstablishment().then((response) => {
+        //         console.log('response', response)
+        //         this.establishment = response.data.data;
+        //         console.log('establishment', this.establishment);
+        //     })
+        // } catch (error) {
+        //     this.$router.push({name: 'user.establishments.register'});
         // }
     }
 }
@@ -66,7 +70,7 @@ export default {
                         alt="user photo" />
                 </button>
                 <!-- Dropdown menu -->
-                <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
+                <div class="hidden z-50 my-4 w-56 text-base list-none bg-white divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
                     id="dropdown">
                     <div class="py-3 px-4">
                         <span class="block text-sm font-semibold text-gray-900 dark:text-white">Neil Sims</span>
