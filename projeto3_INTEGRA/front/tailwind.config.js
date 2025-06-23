@@ -6,9 +6,9 @@ export default {
   ],
   safelist: [
     'bg-blue-500',
-    'bg-blue-700',
+    'hover:bg-blue-700',
     'bg-gray-500',
-    'bg-blue-700'
+    'hover:bg-blue-700'
   ],
   theme: {
   },

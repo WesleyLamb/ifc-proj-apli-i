@@ -1,8 +1,12 @@
 <script>
 import AuthService from '@/services/AuthService';
 import UserEstablishmentService from '@/services/UserEstablishmentService';
+import ButtonComponent from '@/components/forms/ButtonComponent.vue'
 
 export default {
+    components: {
+        ButtonComponent,
+    },
     data: function() {
         return {
             user: null,
@@ -29,6 +33,14 @@ export default {
         // } catch (error) {
         //     this.$router.push({name: 'user.establishments.register'});
         // }
+    },
+    methods: {
+        logout() {
+            AuthService.logout().then((response) => {
+                AuthService.clearSession();
+                this.$router.push({name: 'auth.sign-in'});
+            });
+        }
     }
 }
 
@@ -60,6 +72,7 @@ export default {
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PGS</span>
                 </RouterLink>
             </div>
+            <ButtonComponent @button-click="logout()" text="Sair" />
         </div>
     </nav>
 </template>

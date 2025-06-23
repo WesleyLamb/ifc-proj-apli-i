@@ -4,7 +4,6 @@ export default {
     props: {
         type: String,
         text: String,
-        disabled: Boolean,
         color: {
             type: String,
             default: 'blue',
