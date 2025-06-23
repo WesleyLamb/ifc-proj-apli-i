@@ -25,4 +25,6 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-configure ftp --with-openssl-dir=/usr
 RUN docker-php-ext-install pgsql pdo_pgsql mbstring exif pcntl bcmath gd zip ftp
 
+USER 1000:1000
+
 CMD docker-php-entrypoint php-fpm
